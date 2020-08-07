@@ -1,0 +1,253 @@
+&sml_param
+
+sml_gpu_ratio=1.0D0
+sml_sort_gpu_freq=10
+
+sml_use_pade=.t.
+sml_machine=0             ! 0 circular, 1:D3D, 
+!sml_node_file='EQDSK_V_3mm_FF_201rhotor_shift_HR_n384.node'
+!sml_ele_file='EQDSK_V_3mm_FF_201rhotor_shift_HR_n384.ele'
+!sml_surf_file='EQDSK_V_3mm_FF_201rhotor_shift_HR_n384.flx.aif'
+sml_node_file='EQDSK_V_4mm_FF_178rhotor_shift_HR_n256.node'
+sml_ele_file='EQDSK_V_4mm_FF_178rhotor_shift_HR_n256.ele'
+sml_surf_file='EQDSK_V_4mm_FF_178rhotor_shift_HR_n256.flx.aif'
+
+sml_flat_marker=.t.
+sml_flat_marker_decay_start1=3.0D0
+sml_flat_marker_decay_start2=3.0D0
+sml_flat_marker_cutoff1=4.0D0
+sml_flat_marker_cutoff2=4.0D0
+sml_flat_marker_width1=1D0
+
+sml_f0_grid=.true. 
+sml_pol_decomp=.true.
+sml_f0_grid_alpha=0.0000D0
+!sml_f0_alpha1=0.000D0
+!sml_f0_alpha2=0.0000D0
+sml_bfollow=1
+sml_nhybrid=1
+sml_co_cur_bt=.true.
+sml_special=0             ! 0: normal simulation, 1: single particle simulation
+sml_dt=0.0025D0  !0.005D0            ! delta-t for one time step - unit of toroidal transit time. 
+sml_mstep=4000              ! total time step
+sml_deltaf=.true.        ! delta-f simulation switch - incomplete
+
+sml_turb_efield=.true.
+sml_electron_on=.false. !.true.
+sml_nphi_total=16!8!32
+sml_bounce=3              ! Particle motion boundary condition 
+                          ! 1 for edge simulation (including open field line region)
+                          ! 2 for core simulation (excluding open field line region)
+!!sml_limiter=0             ! Limiter on/off
+sml_fem_matrix=1
+sml_inpsi=0.00           ! inner boundary of simulation - unit of eq_x_psi
+sml_outpsi=0.9          ! outter boundary of simulation - unit of eq_x_psi
+sml_restart_write_period=100
+sml_restart=.false.
+sml_guess_table_size=1000
+sml_00_efield=.true.
+sml_00_npsi=500
+sml_input_file_dir='.' !'/global/cscratch1/sd/jdominsk/XGC-1_inputs/'
+sml_bd_ext_delta2=0.01
+sml_bd_ext_delta1=-0.1
+sml_bd_ext_delta1H=0.01
+sml_bd_ext_delta2H=0.02
+sml_bd_ext_delta3=0.05 !0.02
+sml_bd_ext_delta4=0.08 !0.04
+sml_bounce_zero_weight=0 !1
+sml_weight_max=2D0
+sml_rhomax=1.2D-2
+sml_grid_nrho=6
+sml_wedge_n=3
+sml_ncycle_half=10
+sml_f_source_period=10
+sml_source=.false.
+sml_no_fp_in_f=.false.
+sml_dwdt_exb_only=.f.
+sml_initial_deltaf_noise=0D-25
+
+sml_mode_select_mode = 5  !5 Resonant mode +/- mres modes. Check if putting nmax bigger than nmin enables multiple field aligned m+nq
+                          !6 Is a square filter.
+sml_mode_select_n    = 1,
+sml_mode_select_nmin=1
+sml_mode_select_nmax=24
+!sml_mode_select_mmin=28
+!sml_mode_select_mmax=44
+sml_mode_select_mres=5
+sml_mode_select_inpsi=0.03D0 !< inner boundary for mode selection
+sml_mode_select_outpsi=0.85D0 !< outer boundary for mode selection
+sml_mode_select_bd_width=0.01D0 !< width of boundary envelope
+!sml_mode_select_max_kth_rho=0.1D0 !< Max. k_theta*rhoi retained in poloidal Fourier filter
+
+sml_grad_psitheta=.true.
+sml_resamp_on=.false.
+
+sml_rgn1_pot0_only=.false.
+sml_add_pot0=0
+sml_iter_solver=.t. !.f.
+sml_iter_solver_niter=10
+sml_poisson_solver_type=0
+/
+
+&ptl_param
+ptl_mass_au=2D0             ! 1 for hydrogen, 2 for deutron
+ptl_charge_eu=1D0            ! ion charge
+ptl_num=120000             ! number of particle for simulation
+ptl_maxnum=180000
+ptl_e_mass_au=2D-2
+/
+
+
+&eq_param ! Initial equilibrium profile - Tanh profile
+eq_filename='geqdsk_gene_comp_case5_fix.eqd'
+eq_den_shape=-1
+!eq_den_file='den_gene_case5.prf'
+eq_den_file='dens_Hmode_kine1.prf'
+eq_tempi_shape=-1
+eq_tempe_shape=-1
+eq_tempi_file='temp_Hmode_kine1.prf'
+eq_tempe_file='temp_Hmode_kine1.prf'
+!eq_tempi_file='temp_gene_case5_fix.prf'
+!eq_tempe_file='temp_gene_case5_fix.prf'
+/
+
+&col_param  ! Collision
+col_mode=0  ! 0 : off , 1 monte-carlo (non-conserving) 2: monte-carlo (conserving)
+/
+
+&diag_param ! diagnosis
+diag_1d_period=1
+diag_f0_period=100
+diag_tracer_period=10000
+diag_3d_on=.true.
+/
+
+&neu_param            ! neutral collision
+neu_col_mode=0
+/
+
+&src_param
+src_narea=2
+src_period=10
+src_heat_power1=2.5D6
+src_pout1=0.05
+src_decay_width1=0.15
+src_pout2=0.90D0
+src_pin2=0.75D0
+src_decay_width2=0.06
+src_heat_power2=-2.5D6
+/
+
+&f0_param
+f0_nmu=16 !32
+f0_nvp= 8 !16
+f0_smu_max=4.0
+f0_vp_max=4.0
+f0_col_change_weight=.false.
+f0_f_correction=.true.
+/
+
+&lim_param            ! limiter 
+/
+
+/
+&smooth_param
+smooth_mode_in=0
+smooth_H_mode_in=2
+smooth_H_n_in=1
+smooth_r1_n_in=2
+smooth_r1_d0_in=0.0042
+smooth_r1_type_in=1
+smooth_diag_mode_in=-1
+/
+
+
+&prof_inparam
+!!profile_papi_enable=.true.
+/
+
+&mon_param
+/
+&adios_param
+/
+&ptb_3db_param
+ptb_3db_on=.false.
+/
+&coupling_param
+/
+&cce_phicoupling
+cce_side=1
+cce_field_first_surface=1
+cce_overlap_first_surface=90 !0.4242
+cce_overlap_last_surface=105 !0.5736
+cce_field_last_surface=177
+cce_folder='../coupling/'
+/
+!65     75     80     90     110    100    105    115
+!0.2461 0.3148 0.3507 0.4242 0.5736 0.4990 0.5364 0.6105
+&cce_fcoupling
+ cce_inpsi_field=0D0
+ cce_inpsi=0.25D0
+! cce_outpsi=0.7
+ cce_buffer_nb=2
+ cce_buffer_freq(1)=10
+ cce_buffer_sndrcvs(1)=4
+ cce_buffer_first_surfaces(1)=78
+ cce_buffer_last_surfaces(1) =85
+ cce_buffer_freq(2)=10
+ cce_buffer_sndrcvs(2)=1
+ cce_buffer_first_surfaces(2)=110
+ cce_buffer_last_surfaces(2) =120
+ cce_nbsurfaces=177
+/
+!psi_surf=0 5.216743e-05 1.171066e-04 2.079526e-04 3.245824e-04 4.672097e-04 6.354737e-04 8.295750e-04 1.010375e-03 1.251518e-03 1.518736e-03 1.811249e-03 2.129370e-03 2.472899e-03 2.841957e-03 3.236354e-03 3.655844e-03 4.100549e-03 4.570282e-03 5.064846e-03 5.584443e-03 6.128297e-03 6.697042e-03 7.289650e-03 7.906707e-03 8.547449e-03 9.211965e-03 9.899967e-03 1.061122e-02 1.134568e-02 1.210269e-02 1.288248e-02 1.368438e-02 1.450848e-02 1.535437e-02 1.622158e-02 1.711022e-02 1.802006e-02 1.895032e-02 1.990127e-02 2.087194e-02 2.186235e-02 2.287241e-02 2.390118e-02 2.494884e-02 2.601494e-02 2.709901e-02 2.820098e-02 2.932073e-02 3.045753e-02 3.161100e-02 3.278065e-02 3.396631e-02 3.516756e-02 3.638455e-02 3.761663e-02 3.886305e-02 4.012362e-02 4.139787e-02 4.268624e-02 4.398768e-02 4.530165e-02 4.662787e-02 4.796660e-02 4.931704e-02 5.067854e-02 5.205084e-02 5.343435e-02 5.482773e-02 5.623072e-02 5.764385e-02 5.906583e-02 6.049629e-02 6.193585e-02 6.338311e-02 6.483804e-02 6.630070e-02 6.776999e-02 6.924632e-02 7.072882e-02 7.221731e-02 7.371166e-02 7.521101e-02 7.671580e-02 7.822484e-02 7.973868e-02 8.125619e-02 8.277774e-02 8.430238e-02 8.583042e-02 8.736096e-02 8.889426e-02 9.042956e-02 9.196688e-02 9.350574e-02 9.504590e-02 9.658714e-02 9.812911e-02 9.967157e-02 1.012143e-01 1.027569e-01 1.042992e-01 1.058410e-01 1.073820e-01 1.089218e-01 1.104604e-01 1.119975e-01 1.135327e-01 1.150659e-01 1.165970e-01 1.181256e-01 1.196513e-01 1.211743e-01 1.226943e-01 1.242112e-01 1.257241e-01 1.272335e-01 1.287391e-01 1.302407e-01 1.317382e-01 1.332311e-01 1.347192e-01 1.362027e-01 1.376813e-01 1.391549e-01 1.406234e-01 1.420865e-01 1.435441e-01 1.449961e-01 1.464422e-01 1.478821e-01 1.493160e-01 1.507438e-01 1.521652e-01 1.535803e-01 1.549888e-01 1.563906e-01 1.577858e-01 1.591740e-01 1.605554e-01 1.619297e-01 1.632969e-01 1.646569e-01 1.660092e-01 1.673539e-01 1.686912e-01 1.700209e-01 1.713430e-01 1.726575e-01 1.739643e-01 1.752634e-01 1.765548e-01 1.778382e-01 1.791125e-01 1.803788e-01 1.816374e-01 1.828881e-01 1.841310e-01 1.853652e-01 1.865900e-01 1.878069e-01 1.890160e-01 1.902174e-01 1.914089e-01 1.925915e-01 1.937664e-01 1.949339e-01 1.960912e-01 1.972395e-01 1.983803e-01 1.995138e-01 2.006350e-01 2.017489e-01 2.028557e-01 2.039514e-01 2.050395e-01 2.059441e-01
+!
+&cce_surfaces
+cce_surface_last_node(1:20)=1,12,28,67,106,145,184,223,262,301,340,379,418,495,572,649,726,804,882,960
+cce_surface_last_node(21:40)=1038,1116,1194,1272,1351,1430,1509,1667,1825,1984,2143,2303,2463,2624,2785,2947,3109,3272,3436,3600
+cce_surface_last_node(41:60)=3765,3931,4098,4266,4434,4603,4773,4944,5116,5289,5463,5638,5814,5991,6169,6348,6528,6709,7073,7440
+cce_surface_last_node(61:80)=7809,8181,8555,8932,9311,9693,10078,10466,10857,11251,11648,12048,12451,12857,13267,13680,14096,14516,14939,15366
+cce_surface_last_node(81:100)=15797,16231,16669,17111,17557,18007,18461,18919,19382,19849,20320,20796,21276,21761,22251,22746,23246,23751,24261,24776
+cce_surface_last_node(101:120)=25296,25821,26352,26888,27430,27978,28531,29090,29655,30227,30805,31389,31979,32576,33180,33790,34407,35031,35662,36300
+cce_surface_last_node(121:140)=36946,37599,38260,38928,39604,40288,40980,41680,42389,43106,43832,44566,45309,46061,46822,47593,48373,49163,49962,50771
+cce_surface_last_node(141:160)=51590,52420,53260,54111,54972,55844,56727,57621,58527,59445,60374,61315,62269,63235,64213,65204,66208,67225,68256,69098
+cce_surface_last_node(161:177)=69935,70772,71613,72457,73305,74158,75016,75880,76751,77628,78511,79401,80298,81203,82116,83037,83963
+
+cce_surface_first_node(1:20)=1,2,13,29,68,107,146,185,224,263,302,341,380,419,496,573,650,727,805,883
+cce_surface_first_node(21:40)=961,1039,1117,1195,1273,1352,1431,1510,1668,1826,1985,2144,2304,2464,2625,2786,2948,3110,3273,3437
+cce_surface_first_node(41:60)=3601,3766,3932,4099,4267,4435,4604,4774,4945,5117,5290,5464,5639,5815,5992,6170,6349,6529,6710,7074
+cce_surface_first_node(61:80)=7441,7810,8182,8556,8933,9312,9694,10079,10467,10858,11252,11649,12049,12452,12858,13268,13681,14097,14517,14940
+cce_surface_first_node(81:100)=15367,15798,16232,16670,17112,17558,18008,18462,18920,19383,19850,20321,20797,21277,21762,22252,22747,23247,23752,24262
+cce_surface_first_node(101:120)=24777,25297,25822,26353,26889,27431,27979,28532,29091,29656,30228,30806,31390,31980,32577,33181,33791,34408,35032,35663
+cce_surface_first_node(121:140)=36301,36947,37600,38261,38929,39605,40289,40981,41681,42390,43107,43833,44567,45310,46062,46823,47594,48374,49164,49963
+cce_surface_first_node(141:160)=50772,51591,52421,53261,54112,54973,55845,56728,57622,58528,59446,60375,61316,62270,63236,64214,65205,66209,67226,68257
+cce_surface_first_node(161:177)=69099,69936,70773,71614,72458,73306,74159,75017,75881,76752,77629,78512,79402,80299,81204,82117,83038
+/
+
+&resamp_param
+resamp_rate=1!20
+resamp_min_ratio=0.90D0
+resamp_max_ratio=1.05D0
+resamp_max_target=30
+resamp_var = 1.0D-5                      !< threshold for relative standard deviation in bin for auto-resample
+resamp_tile_size = 1                     !< Bin size on the velocity space grid in cells (not vertices)
+resamp_ineq_tol = 1D-5                   !< Threshold for relative error in the inequality constraints in the QP optimization
+resamp_retry = .false.                   !< Retry QP optimization for failed bins with relaxed inequality constraints
+resamp_ineq_tol_max = 1D-4               !< Maximal threshold for relative error in inequality constraints for retried bins
+resamp_highv_max = 10D0                  !< energy cutoff of the high velocity bins v_para>f0_vp_max and v_perp>f0_smu_max
+resamp_highv_max_ratio = 4D0             !< Downsampling threshold for high-velocity bins
+resamp_fill_empty=.false.                !< Whether to fill empty bins
+resamp_fullf_on=.false.                  !< Whether to resample the full-f weights in addition to delta-f weights
+resamp_grid_ineq_on=.false.              !< Switch for using inequality constraints for the grid charge for resampling
+/
+
+!&resamp_param
+!  resamp_rate = 4         !2*sml_f_source_period      !< timesteps per resample
+!  resamp_var = 5.0D-2                      !< threshold for relative standard deviation in bin for auto-resample
+!  resamp_min_ratio = 0.25D0                !< min ratio of (# of ptl)/(target # of ptl) in bin for auto-upsample
+!  resamp_max_ratio = 2.0D0                 !< max ratio of (# of ptl)/(target # of ptl) in bin for auto-downsample
+!  resamp_max_target = 4                    !< Overrides the number of constraints in determining the target # of ptl of a bin
+!  resamp_tile_size = 4                     !< Bin size on the velocity space grid in cells (not vertices)
+!  !resamp_ineq_tol = 1D-7                   !< Threshold for relative error in the inequality constraints in the QP optimization
+!  !resamp_restart = .false.                 !< Run resampling before dumping the final checkpoint
+!/
