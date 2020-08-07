@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -N 430
+#SBATCH -q regular
+#SBATCH -t 12:00:00
+#SBATCH -A m499
+#SBATCH -L SCRATCH
+#SBATCH -C knl,quad,cache
+#SBATCH -S 4
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=jdominsk@pppl.gov
+#SBATCH --job-name=wdmapp
+
+./runscript
+

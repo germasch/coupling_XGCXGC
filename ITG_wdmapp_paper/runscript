@@ -1,0 +1,43 @@
+#!/bin/bash
+
+module load cray-libsci/19.06.1
+module swap craype-haswell craype-mic-knl
+module load cray-fftw/3.3.8.4
+module load cray-hdf5-parallel/1.10.5.2
+module load numactl/2.0.12
+module load zlib/1.2.11
+export XGC_PLATFORM=cori_knl
+
+export OMP_NUM_THREADS=32
+export OMP_PLACES=threads
+export OMP_PROC_BIND=spread
+export OMP_MAX_ACTIVE_LEVELS=2
+export OMP_NESTED=TRUE
+export OMP_STACKSIZE=2G
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/projectdirs/m499/Software/camtimers/DEFAULT/cori_knl/DEFAULT/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/projectdirs/m499/Software/pspline/DEFAULT/cori_knl/DEFAULT/lib
+
+export n_mpi_ranks_per_node=8
+export n_mpi_ranks=$((${SLURM_JOB_NUM_NODES} * ${n_mpi_ranks_per_node}))
+
+echo 'Number of nodes: '                  ${SLURM_JOB_NUM_NODES}
+echo 'MPI ranks (total): '                $n_mpi_ranks
+echo 'MPI ranks per node: '               $n_mpi_ranks_per_node
+echo 'Number of OMP threads: '            ${OMP_NUM_THREADS}
+
+mkdir -p coupling
+rm -rf coupling/*
+
+cd XGC_core
+mkdir -p restart_dir
+export OMP_NUM_THREADS=32
+srun -N 170 -n 1360 -c 32 --cpu_bind=cores ./xgc-es_wdmapp_omp > log.out 2>log.err &
+
+cd ../XGC_edge
+mkdir -p restart_dir
+export OMP_NUM_THREADS=32
+srun -N 256 -n 2048 -c 32 --cpu_bind=cores ./xgc-es_wdmapp_omp > log.out 2>log.err &
+
+wait
+
