@@ -4,3 +4,8 @@ slurm-*.out
 */log.out
 */log.err
 */xgc-es
+*/*.bp
+*/units.m
+*/units.txt
+*/*.dat
+*/timing_*
