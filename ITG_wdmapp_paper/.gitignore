@@ -9,3 +9,5 @@ slurm-*.out
 */units.txt
 */*.dat
 */timing_*
+coupling/*.bp
+coupling/*.unlock
