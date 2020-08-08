@@ -1,6 +1,7 @@
 slurm-*.out
 */TASKMAP*.txt
 */fort.input.used
+*/log
 */log.out
 */log.err
 */xgc-es

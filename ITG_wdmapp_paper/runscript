@@ -32,12 +32,12 @@ rm -rf coupling/*
 cd XGC_core
 mkdir -p restart_dir
 export OMP_NUM_THREADS=32
-srun -N 170 -n 1360 -c 32 --cpu_bind=cores ./xgc-es_wdmapp_omp > log.out 2>log.err &
+srun -N 170 -n 1360 -c 32 --cpu_bind=cores ./xgc-es 2>&1 | tee log &
 
 cd ../XGC_edge
 mkdir -p restart_dir
 export OMP_NUM_THREADS=32
-srun -N 256 -n 2048 -c 32 --cpu_bind=cores ./xgc-es_wdmapp_omp > log.out 2>log.err &
+srun -N 256 -n 2048 -c 32 --cpu_bind=cores ./xgc-es 2>&1 | tee log &
 
 wait
 
