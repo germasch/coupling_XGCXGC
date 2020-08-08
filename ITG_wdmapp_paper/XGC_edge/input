@@ -29,7 +29,7 @@ sml_nhybrid=1
 sml_co_cur_bt=.true.
 sml_special=0             ! 0: normal simulation, 1: single particle simulation
 sml_dt=0.0025D0  !0.005D0            ! delta-t for one time step - unit of toroidal transit time. 
-sml_mstep=4000              ! total time step
+sml_mstep=22              ! total time step
 sml_deltaf=.true.        ! delta-f simulation switch - incomplete
 
 sml_turb_efield=.true.
