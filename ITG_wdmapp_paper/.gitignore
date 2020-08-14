@@ -12,3 +12,4 @@ slurm-*.out
 */timing_*
 coupling/*.bp
 coupling/*.unlock
+*.qdstrm
